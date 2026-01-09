@@ -51,25 +51,16 @@ The backend is structured using Object-Oriented principles with **ES6 Classes** 
 
 ## ☁️ Cloud Infrastructure (AWS Deployment)
 
-The game is deployed using a **containerized CI/CD pipeline** on AWS via **GitHub Actions** for reliability and portability.
+The game is deployed on **AWS EC2** using **Docker** for containerization and portability.
 
-### **Infrastructure Services**
+### **Deployment Architecture**
 
-#### **AWS ECR (Elastic Container Registry)**
-- Private container registry
-- Stores versioned `tic-tac-toe-app` Docker images
-- Supports multi-stage builds (React + Node.js)
-
-#### **AWS IAM (Identity & Access Management)**
-- Secure role-based permissions
-- Allows EC2 to pull images from ECR **without exposing credentials**
-- GitHub Actions uses AWS credentials for automated deployments
-
-### **Compute Layer**
-
-#### **EC2 Instance (t3.micro or better)**
-- Runs Docker daemon and executes the game server container
-- Supports both standalone and Docker Compose deployments
+#### **AWS EC2 Instance**
+- **Instance Type:** t2.micro or t3.micro
+- Runs **Amazon Linux 2023**
+- Hosts **Docker** and **Docker Compose**
+- Pulls code directly from **GitHub repository**
+- Builds and runs the containerized application
 
 #### **Game Server Container**
 - Multi-stage Docker build:
@@ -79,10 +70,24 @@ The game is deployed using a **containerized CI/CD pipeline** on AWS via **GitHu
 - Serves both API and static React files in production
 - Maintains **in-memory state** for all active game sessions
 
-### **Optional: MongoDB Integration**
+### **Security Configuration**
+
+#### **Security Group Rules**
+- Port 22 (SSH): Restricted to your IP for secure access
+- Port 5000 (App): Open to 0.0.0.0/0 for public access
+- Port 80 (Optional): For future Nginx reverse proxy
+
+### **Optional Enhancements**
+
+#### **MongoDB Integration**
 - Add **AWS DocumentDB** for persistent game history
 - Store player stats, match results, reconnection data
 - Enable advanced features like leaderboards
+
+#### **AWS ECR (Advanced)**
+- Use Elastic Container Registry for versioned Docker images
+- Implement automated CI/CD with GitHub Actions
+- Faster deployments by pulling pre-built images
 
 ---
 
@@ -91,7 +96,8 @@ The game is deployed using a **containerized CI/CD pipeline** on AWS via **GitHu
 - **Backend:** Node.js 18+, Express, Socket.IO
 - **Frontend:** React 18, Vite
 - **Real-time:** Socket.IO (native WebSocket support)
-- **Deployment:** Docker, AWS EC2, AWS ECR
+- **Deployment:** Docker, AWS EC2
+- **Version Control:** GitHub
 - **Package Manager:** npm
 
 ---
