@@ -5,9 +5,28 @@ const SERVER_URL = import.meta.env.MODE === 'production'
   ? window.location.origin 
   : (import.meta.env.VITE_SERVER_URL || 'http://localhost:5000');
 
+console.log('Socket.IO connecting to:', SERVER_URL);
+
 export const socket = io(SERVER_URL, {
   autoConnect: false,
-  withCredentials: true
+  withCredentials: true,
+  transports: ['websocket', 'polling'],
+  reconnection: true,
+  reconnectionDelay: 1000,
+  reconnectionAttempts: 5
+});
+
+// Add connection event logging
+socket.on('connect', () => {
+  console.log('✅ Socket connected:', socket.id);
+});
+
+socket.on('connect_error', (error) => {
+  console.error('❌ Socket connection error:', error);
+});
+
+socket.on('disconnect', (reason) => {
+  console.log('❌ Socket disconnected:', reason);
 });
 
 // Connection helpers

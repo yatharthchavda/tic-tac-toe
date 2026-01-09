@@ -50,7 +50,11 @@ if (process.env.NODE_ENV === 'production') {
 
 // Socket.IO setup
 const io = new Server(httpServer, {
-  cors: corsOptions
+  cors: process.env.NODE_ENV === 'production' 
+    ? { origin: true, credentials: true }  // Allow same-origin in production
+    : corsOptions,
+  path: '/socket.io/',
+  transports: ['websocket', 'polling']
 });
 
 // Share session with Socket.IO
