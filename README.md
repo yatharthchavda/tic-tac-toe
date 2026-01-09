@@ -1,8 +1,7 @@
 # 🕹️ Distributed Real-Time Tic-Tac-Toe
-![aws diagram](https://github.com/user-attachments/assets/22847919-318b-4cd5-9dca-94d5a96b0c64)
 
 A real-time, multiplayer Tic-Tac-Toe game developed as part of the **Distributed and Parallel Computing** course.  
-The system supports **multiple concurrent game sessions**, built using **Flask-SocketIO**, and deployed on **AWS** using Docker.
+The system supports **multiple concurrent game sessions**, built using **Node.js + Express + Socket.IO**, and deployed on **AWS EC2** using Docker.
 
 ---
 
@@ -80,14 +79,9 @@ The game is deployed on **AWS EC2** using **Docker** for containerization and po
 ### **Optional Enhancements**
 
 #### **MongoDB Integration**
-- Add **AWS DocumentDB** for persistent game history
+- Add **AWS DocumentDB** or **MongoDB Atlas** for persistent game history
 - Store player stats, match results, reconnection data
 - Enable advanced features like leaderboards
-
-#### **AWS ECR (Advanced)**
-- Use Elastic Container Registry for versioned Docker images
-- Implement automated CI/CD with GitHub Actions
-- Faster deployments by pulling pre-built images
 
 ---
 
@@ -104,8 +98,6 @@ The game is deployed on **AWS EC2** using **Docker** for containerization and po
 
 ## 🚀 Quick Start
 
-See [QUICK_START.md](./QUICK_START.md) for detailed setup instructions.
-
 **Development:**
 ```bash
 # Backend
@@ -115,9 +107,75 @@ cd server && npm install && npm run dev
 cd client && npm install && npm run dev
 ```
 
-**Production:**
+**Production (Docker):**
 ```bash
-docker-compose up --build
+docker build -t tic-tac-toe-app .
+docker run -d -p 5000:5000 -e NODE_ENV=production --name tic-tac-toe-app tic-tac-toe-app
 ```
+
+Access the game at `http://localhost:5000` (development: React at `http://localhost:5173`)
+
+---
+
+## 🌐 AWS EC2 Deployment
+
+### **Prerequisites**
+- AWS account with EC2 access
+- EC2 instance (t2.micro) running Amazon Linux 2023
+- Security group with ports 22 (SSH) and 5000 (app) open
+
+### **Deployment Steps**
+
+1. **Connect to EC2:**
+```bash
+ssh -i your-key.pem ec2-user@your-ec2-ip
+```
+
+2. **Install Docker:**
+```bash
+sudo yum update -y
+sudo yum install -y docker git
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -a -G docker ec2-user
+```
+
+3. **Clone and Build:**
+```bash
+git clone https://github.com/yourusername/tic-tac-toe.git
+cd tic-tac-toe
+docker build -t tic-tac-toe-app .
+```
+
+4. **Run Container:**
+```bash
+docker run -d -p 5000:5000 -e NODE_ENV=production -e SESSION_SECRET=your-secret --name tic-tac-toe-app --restart always tic-tac-toe-app
+```
+
+Access your game at `http://your-ec2-ip:5000`
+
+---
+
+## 🎮 Features
+
+- Real-time multiplayer gameplay using WebSocket
+- Multiple concurrent game rooms
+- Player lobby with room creation
+- Turn-based validation
+- Win/draw detection
+- Session management
+- Responsive React UI
+
+---
+
+## 🚀 Future Enhancements
+
+- **Persistent Storage:** Integrate MongoDB for game history and player stats
+- **Authentication:** Add user login system with OAuth
+- **Leaderboards:** Track wins/losses across all players
+- **Reconnection:** Allow players to rejoin after disconnection
+- **Mobile App:** Build native iOS/Android apps
+- **AI Opponent:** Add single-player mode with bot
+- **Custom Game Modes:** Larger boards (5x5, 4x4), time limits
 
 ---
