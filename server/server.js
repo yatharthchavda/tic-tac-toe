@@ -21,7 +21,9 @@ const httpServer = createServer(app);
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.CLIENT_URL || true  // Allow same origin in production
+    : process.env.CLIENT_URL || 'http://localhost:5173',
   credentials: true
 };
 
@@ -43,7 +45,7 @@ app.use(sessionMiddleware);
 
 // Serve static files from React build (for production)
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist')));
+  app.use(express.static(path.join(__dirname, 'public')));
 }
 
 // Socket.IO setup
@@ -254,7 +256,7 @@ app.get('/api/rooms', (req, res) => {
 // Serve React app for all other routes (production)
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    res.sendFile(path.join(__dirname, 'public/index.html'));
   });
 }
 
