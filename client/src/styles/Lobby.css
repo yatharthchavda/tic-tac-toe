@@ -1,0 +1,119 @@
+.lobby-container {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.4s ease;
+}
+
+.lobby-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.lobby-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.room-info {
+  text-align: center;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: var(--border-radius);
+  color: white;
+}
+
+.room-label {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.room-name {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.players-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.player-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  border: 2px solid #e9ecef;
+}
+
+.player-label {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.player-name {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--primary-color);
+}
+
+.game-status-indicator {
+  text-align: center;
+  padding: 16px;
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: var(--border-radius);
+  color: #856404;
+  font-weight: 600;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lobby-start-button {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.lobby-start-button.enabled:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.lobby-start-button.enabled:active {
+  transform: translateY(0);
+}
+
+.lobby-start-button.disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+@keyframes slideIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
