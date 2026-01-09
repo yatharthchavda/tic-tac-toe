@@ -5,10 +5,9 @@ The system supports **multiple concurrent game sessions**, built using **Node.js
 
 ---
 
-## 🚀 System Architecture (OOP Design)
-![oops diagram](https://github.com/user-attachments/assets/8e69f66a-2da9-482e-a8f9-93c62d35ac05)
+## 🚀 System Architecture
 
-The backend is structured using Object-Oriented principles with **ES6 Classes** to ensure **session isolation**, **clean state management**, and **scalability**.
+The application uses Object-Oriented principles with **ES6 Classes** for the backend to ensure **session isolation**, **clean state management**, and **scalability**.
 
 ### **Core Components**
 
